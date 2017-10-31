@@ -21,6 +21,9 @@ var pcMapSchema = new Schema({
     },
     placeNumber: {
       type: Number
+    },
+    pcIPAdress: {
+      type: Number
     }
   }]
 });
