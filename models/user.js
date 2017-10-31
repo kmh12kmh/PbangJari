@@ -31,6 +31,10 @@ var userSchema = new Schema({
   markPCBang: [{
     type: Schema.Types.ObjectId,
     ref: 'pcBang'
-  }]
+  }],
+  createDate: {
+    type: Date,
+    default: Date.now
+  }
 });
 module.exports = mongoose.model('user', userSchema);
