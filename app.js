@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var pcmap = require('./routes/pcmap');
 var pcbang = require('./routes/pcbang');
 var ceo = require('./routes/ceo');
+var pcmap = require('./routes/pcmap');
 
 var app = express();
 var mongoose = require('mongoose');
@@ -35,9 +35,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api', users);
-app.use('/api', pcmap);
 app.use('/api', pcbang);
 app.use('/api', ceo);
+app.use('/api', pcmap);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

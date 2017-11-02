@@ -3,9 +3,10 @@ mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
 
 var pcBangSchema = new Schema({
-  ceoId : {
+  ceoId: {
     type: Schema.Types.ObjectId,
-    ref: 'ceo'
+    ref: 'ceo',
+    require: true
   },
   pcBangName: {
     type: String,
@@ -19,10 +20,16 @@ var pcBangSchema = new Schema({
     roadAddress: String,
     detailAddress: String
   },
-  pcBangIPAddress:{
-    first : {type:Number},
-    second : {type:Number},
-    third : {type:Number}
+  pcBangIPAddress: {
+    first: {
+      type: Number
+    },
+    second: {
+      type: Number
+    },
+    third: {
+      type: Number
+    }
   }
 });
 module.exports = mongoose.model('pcbang', pcBangSchema);

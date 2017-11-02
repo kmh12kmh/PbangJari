@@ -19,7 +19,7 @@ var userSchema = new Schema({
   age: {
     type: Number,
     require: true
-  }
+  },
   email: {
     type: String,
     require: true,

@@ -16,6 +16,11 @@ var ceoSchema = new Schema({
     type: String,
     require: true
   },
+  email: {
+    type: String,
+    require: true,
+    unique: true
+  },
   license: {
     type: String,
     require: true
