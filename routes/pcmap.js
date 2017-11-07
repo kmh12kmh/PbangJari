@@ -6,7 +6,7 @@ router.get('/allPCmap', (req, res) => { //모든 pcMap 조회
   var pcMapSelects = "totalFloor"
   var pcBangSelects = "pcBangName"
 
-  PCmap.find({}, pcMapSelects).populate("pcBangId", pcBangSelects).exec((err, pcmaps) => {
+  PCmap.find({}, (err, pcmaps) => {
     if (err) res.status(404).end();
     else if (!pcmaps) res.status(403).json({
       message: "no pcmaps"
@@ -15,12 +15,17 @@ router.get('/allPCmap', (req, res) => { //모든 pcMap 조회
   })
 });
 
-router.post('/pcMap/create/:pcBangId', (req, res) => {  //pcmap 생성
+router.post('/pcMap/create/:pcBangId', (req, res) => { //pcmap 생성
   var mapArray = []
   var newMap = new PCmap({
     "pcBangId": req.params.pcBangId,
-    "totalFloor": req.body.totalFloor,
-    "eachFloor": mapArray
+    "floor": req.body.floor,
+    "pcTableSize.horizontal": req.body.horizontal,
+    "pcTableSize.vertical": req.body.vertical,
+    "pcNumberArray":req.body.pcNumberArray,
+    "pcPlaceArray":req.body.pcPlaceArray,
+    "pcIPArray":req.body.pcIPArray,
+    "pcFlagArray":req.body.pcFlagArray
   })
 
   newMap.save((err, pcmap) => {
@@ -32,37 +37,52 @@ router.post('/pcMap/create/:pcBangId', (req, res) => {  //pcmap 생성
   })
 })
 
-router.put('/pcMap/pushMap/:pcMapId', (req, res) => { //pcmap 층 추가
-  var newFloor = {
-    "pcTableSize.horizontal": req.body.horizontal,
-    "pcTableSize.vertical": req.body.vertical,
-    "pcPlacement" = req.body.pcPlacement
-  }
-  PCmap.findOne({
-    "_id": req.params.pcMapId
-  }, (err, pcmap) => {
+router.get('/pcMap/:pcBangId', (req, res) => { // pcmap 조회
+  PCmap.find({
+    'pcBangId': req.params.pcBangId
+  }, (err, pcmaps) => {
     if (err) res.status(404).end();
-    else if (!pcmap) res.status(403).json({
-      message: "no map"
+    else if (!pcmaps) res.status(403).json({
+      message: "no pcmaps"
     });
-    else {
-      if (pcmap.totalFloor == pcmap.eachFloor.length) res.status(403).json({
-        message: "already full floors"
-      });
-      else {
-        pcmap.update({
-          $push: {
-            "eachFloor": newFloor
-          }
-        }, (err) => {
-          if (err) res.status(404).end();
-          else res.status(200).json({
-            message: "push sucess"
-          })
-        })
-      }
-    }
+    else res.status(200).json(pcmaps);
   })
 })
+
+router.put('/pcMap/update/:pcMapId', (req, res) => { // pcmap 업데이트
+  var updateMap = {
+    "floor": req.body.floor,
+    "pcTableSize.horizontal": req.body.horizontal,
+    "pcTableSize.vertical": req.body.vertical,
+    "pcNumberArray":req.body.pcNumberArray,
+    "pcPlaceArray":req.body.pcPlaceArray,
+    "pcIPArray":req.body.pcIPArray,
+    "pcFlagArray":req.body.pcFlagArray
+  }
+
+  PCmap.update({
+    "_id": req.params.pcMapId
+  }, {
+    $set: {
+      updateMap
+    }
+  }, (err) => {
+    if (err) res.status(404).end();
+    else res.status(200).json({
+      message: "update sucess"
+    });
+  })
+})
+
+router.delete('/pcMap/delete/:pcMapId', (req, res) => { // pcmap 삭제
+  PCmap.remove({
+    "_id": req.params.pcMapId
+  }, (err) => {
+    if (err) res.status(404).end();
+    else res.status(200).json({
+      message: "delete sucess!"
+    });
+  })
+});
 
 module.exports = router;

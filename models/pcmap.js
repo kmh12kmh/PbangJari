@@ -8,31 +8,36 @@ var pcMapSchema = new Schema({
     ref: 'pcBang',
     require: true
   },
-  totalFloor: {
+  floor: {
     type: Number,
-    default: 0
+    default: 1
   },
-  eachFloor: [{
-    pcTableSize: {
-      horizontal: {
-        type: Number
-      },
-      vertical: {
-        type: Number
-      }
+  pcTableSize: {
+    horizontal: {
+      type: Number,
+      require: true
     },
-    pcPlacement: [{
-      pcNumber: {
-        type: Number
-      },
-      placeNumber: {
-        type: Number
-      },
-      pcIPAdress: {
-        type: Number
-      }
-    }]
-  }]
+    vertical: {
+      type: Number,
+      require: true
+    }
+  },
+  pcNumberArray: [{
+    type: Number
+  }],
+  pcPlaceArray: [{
+    type: Number
+  }],
+  pcIPArray: [{
+    type: String
+  }],
+  pcFlagArray: [{
+    type: Number
+  }],
+  lastSearch: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = mongoose.model('pcmap', pcMapSchema);
