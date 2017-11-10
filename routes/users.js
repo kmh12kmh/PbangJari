@@ -5,8 +5,8 @@ var User = require('../models/user');
 /* GET users listing. */
 router.get('/allUser', (req, res) => { //모든 유저 조회
   var selects = {
-    "userId": 1,
-    "userName": 1
+    "nickname": 1,
+    "kaccount_email": 1
   }
   User.find({}, selects, (err, users) => {
     if (err) res.status(404).end();
@@ -19,12 +19,9 @@ router.get('/allUser', (req, res) => { //모든 유저 조회
 
 router.post('/user/signUp', (req, res) => { //유저 가입
   var newUser = new User({
-    userId: req.body.userId,
-    passWd: req.body.passWd,
-    userName: req.body.userName,
-    age: req.body.age,
-    email: req.body.email,
-    tel: req.body.tel
+    uuid: req.body.uuid,
+    kaccount_email: req.body.kaccount_email,
+    nickname: req.body.nickname
   })
 
   newUser.save((err, user) => {
@@ -36,46 +33,46 @@ router.post('/user/signUp', (req, res) => { //유저 가입
   });
 });
 
-router.get('/user/load/:userId', (req, res) => { //유저 정보 불러오기
-  var selects = {
-    "userId": 1,
-    "userName": 1,
-    "age": 1,
-    "email": 1,
-    "tel": 1
-  }
-  User.findById(req.params.userId, (err, user) => {
-    if (err) res.status(404).end();
-    else if (!user) res.status(403).json({
-      message: "no user"
-    });
-    else res.status(200).json(user);
-  })
-});
-
-router.put('/user/update/:userId', (req, res) => { //유저 정보 변경
-  var updateUser = {
-    userName: req.body.userName,
-    age: req.body.age,
-    email: req.body.email,
-    tel: req.body.tel
-  }
-  User.findByIdAndUpdate(req.params.userId, {
-    $set: updateUser
-  }, (err) => {
-    if (err) res.status(404).end();
-    else res.status(200).json({message:"update sucess"});
-  })
-});
-
-router.delete('/user/delete/:userId', (req, res) => { //유저 삭제
-  User.findByIdAndRemove(req.params.userId, (err) => {
-    if (err) res.status(404).end();
-    else res.status(200).json({
-      message: "delete sucess!"
-    });
-  })
-});
+// router.get('/user/load/:userId', (req, res) => { //유저 정보 불러오기
+//   var selects = {
+//     "userId": 1,
+//     "userName": 1,
+//     "age": 1,
+//     "email": 1,
+//     "tel": 1
+//   }
+//   User.findById(req.params.userId, (err, user) => {
+//     if (err) res.status(404).end();
+//     else if (!user) res.status(403).json({
+//       message: "no user"
+//     });
+//     else res.status(200).json(user);
+//   })
+// });
+//
+// router.put('/user/update/:userId', (req, res) => { //유저 정보 변경
+//   var updateUser = {
+//     userName: req.body.userName,
+//     age: req.body.age,
+//     email: req.body.email,
+//     tel: req.body.tel
+//   }
+//   User.findByIdAndUpdate(req.params.userId, {
+//     $set: updateUser
+//   }, (err) => {
+//     if (err) res.status(404).end();
+//     else res.status(200).json({message:"update sucess"});
+//   })
+// // });
+//
+// router.delete('/user/delete/:userId', (req, res) => { //유저 삭제
+//   User.findByIdAndRemove(req.params.userId, (err) => {
+//     if (err) res.status(404).end();
+//     else res.status(200).json({
+//       message: "delete sucess!"
+//     });
+//   })
+// });
 
 router.put('/user/putMark/:userId', (req, res) => { //유저 피방 즐겨찾기 추가
   User.findByIdAndUpdate(req.params.userId, {
@@ -91,4 +88,4 @@ router.put('/user/putMark/:userId', (req, res) => { //유저 피방 즐겨찾기
   })
 });
 
-module.exports = router;
+export default router

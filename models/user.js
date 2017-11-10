@@ -3,29 +3,15 @@ mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-  userId: {
-    type: String,
-    require: true,
-    unique: true
+  uuid = {
+    type : String,
+    require : true,
+    unique : true
+  }
+  kaccount_email: {
+    type: String
   },
-  passWd: {
-    type: String,
-    select: false
-  },
-  userName: {
-    type: String,
-    require: true
-  },
-  age: {
-    type: Number,
-    require: true
-  },
-  email: {
-    type: String,
-    require: true,
-    unique: true
-  },
-  tel: {
+  nickname: {
     type: String
   },
   markPCBang: [{

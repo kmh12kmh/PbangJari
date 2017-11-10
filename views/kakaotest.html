@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+  <title>Login Demo - Kakao JavaScript SDK</title>
+  <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+<a id="kakao-login-btn"></a>
+<a href="http://developers.kakao.com/logout"></a>
+<script type='text/javascript'>
+  //<![CDATA[
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('7fa2b34b42729a8b27752a24c9bba8d8');
+    // 카카오 로그인 버튼을 생성합니다.
+    Kakao.Auth.createLoginButton({
+      container: '#kakao-login-btn',
+      success: function(authObj) {
+        alert(JSON.stringify(authObj));
+      },
+      fail: function(err) {
+         alert(JSON.stringify(err));
+      }
+    });
+  //]]>
+</script>
+
+</body>
+</html>
+<!-- <!docType html>
+<html lang="ko">
+<head>
+	<title>카카오톡 로그인</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+	<div id="kakao-logged-group"></div>
+	<div id="kakao-profile"></div>
+  <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			Kakao.init("7fa2b34b42729a8b27752a24c9bba8d8");
+      console.log('web ready');
+			function getKakaotalkUserProfile() {
+				Kakao.API.request({
+					url: '/v1/user/me',
+					success: function(res) {
+						$("#kakao-profile").append(res.properties.nickname);
+						$("#kakao-profile").append($("<img/>",{"src":res.properties.profile_image,"alt":res.properties.nickname+"님의 프로필 사진"}));
+            console.log('success');
+					},
+					fail: function(error) {
+            console.log('error occured');
+						console.log(error);
+					}
+				});
+			}
+			function createKakaotalkLogin() {
+				$("#kakao-logged-group .kakao-logout-btn,#kakao-logged-group .kakao-login-btn").remove();
+				var loginBtn = $("<a/>",{"class":"kakao-login-btn","text":"로그인"});
+        console.log('function created');
+        loginBtn.click(function() {
+					Kakao.Auth.login({
+						persistAccessToken: true,
+						persistRefreshToken: true,
+						success: function(authObj) {
+							getKakaotalkUserProfile();
+							createKakaotalkLogout();
+              console.log('login btn created');
+						},
+						fail: function(err) {
+							console.log(err);
+						}
+					});
+				});
+				$("#kakao-logged-group").prepend(loginBtn)
+			}
+			function createKakaotalkLogout() {
+				$("#kakao-logged-group .kakao-logout-btn,#kakao-logged-group .kakao-login-btn").remove();
+				var logoutBtn = $("<a/>",{"class":"kakao-logout-btn","text":"로그아웃"});
+				logoutBtn.click(function() {
+					Kakao.Auth.logout();
+					createKakaotalkLogin();
+					$("#kakao-profile").text("");
+				});
+				$("#kakao-logged-group").prepend(logoutBtn);
+			}
+			if(Kakao.Auth.getRefreshToken() !== undefined&&Kakao.Auth.getRefreshToken().replace(/ /gi,"")!=""){
+				createKakaotalkLogout();
+				getKakaotalkUserProfile();
+			} else {
+				createKakaotalkLogin();
+			}
+		});
+	</script>
+</body>
+</html> -->
