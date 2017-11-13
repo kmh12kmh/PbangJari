@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -58,5 +59,22 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+var session = require('express-session');
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}));
+
+require('./config/passport')(passport);
+
+app.use(passport.initialize());
+app.use(passport.session()); //로그인 세션 유지
+//플래시메세지를 사용한다면
+var flash = require('connect-flash');
+app.use(flash());
+
+
 
 module.exports = app;

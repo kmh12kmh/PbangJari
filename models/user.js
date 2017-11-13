@@ -3,12 +3,12 @@ mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-  uuid = {
-    type : String,
-    require : true,
-    unique : true
-  }
-  kaccount_email: {
+  uuid: {
+    type: String,
+    require: true,
+    unique: true
+  },
+  email: {
     type: String
   },
   nickname: {

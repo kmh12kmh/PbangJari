@@ -66,7 +66,7 @@
         <!-- Navigation -->
         <div class="pbangjari-navigation-container">
           <nav class="pbangjari-navigation mdl-navigation">
-            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:loginWithKakao()">로그인</a>
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/kakao">로그인</a>
             <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">피방들</a>
           </nav>
         </div>
@@ -92,10 +92,7 @@
 
   </div>
   <script type='text/javascript'>
-    //<![CDATA[
-    // 사용할 앱의 JavaScript 키를 설정해 주세요.
     Kakao.init('7fa2b34b42729a8b27752a24c9bba8d8');
-
     function loginWithKakao() {
       // 로그인 창을 띄웁니다.
       Kakao.Auth.login({
@@ -115,7 +112,6 @@
         }
       });
     };
-    //]]>
   </script>
 </body>
 
